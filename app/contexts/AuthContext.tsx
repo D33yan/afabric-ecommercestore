@@ -1,6 +1,14 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, ReactNode, useMemo } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+  useMemo,
+  useCallback,
+} from 'react';
 import {
   User,
   onAuthStateChanged,
@@ -14,7 +22,7 @@ import { auth } from '@/lib/firebase';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  error: Error | null;
+  error: string | null;
   signOut: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
@@ -22,13 +30,23 @@ interface AuthContextType {
   clearError: () => void;
 }
 
-// Explicitly type the context with a default undefined value
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const defaultContext: AuthContextType = {
+  user: null,
+  loading: true,
+  error: null,
+  signOut: async () => {},
+  signIn: async () => {},
+  signUp: async () => {},
+  resetPassword: async () => {},
+  clearError: () => {},
+};
+
+const AuthContext = createContext<AuthContextType>(defaultContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
@@ -38,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setLoading(false);
       },
       (error) => {
-        setError(error instanceof Error ? error : new Error('Failed to detect auth state'));
+        setError(error.message || 'Failed to detect auth state');
         setLoading(false);
       }
     );
@@ -46,62 +64,51 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
-  const normalizeError = (err: unknown): Error =>
-    err instanceof Error ? err : new Error('An unexpected error occurred.');
+  const handleError = (err: unknown): string => {
+    return err instanceof Error ? err.message : 'An unexpected error occurred.';
+  };
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, password: string) => {
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
-      setError(normalizeError(err));
+      setError(handleError(err));
       throw err;
-    } finally {
-      setLoading(false);
     }
-  };
+  }, []);
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = useCallback(async (email: string, password: string) => {
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
       await createUserWithEmailAndPassword(auth, email, password);
     } catch (err) {
-      setError(normalizeError(err));
+      setError(handleError(err));
       throw err;
-    } finally {
-      setLoading(false);
     }
-  };
+  }, []);
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
       await firebaseSignOut(auth);
     } catch (err) {
-      setError(normalizeError(err));
+      setError(handleError(err));
       throw err;
-    } finally {
-      setLoading(false);
     }
-  };
+  }, []);
 
-  const resetPassword = async (email: string) => {
+  const resetPassword = useCallback(async (email: string) => {
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
       await sendPasswordResetEmail(auth, email);
     } catch (err) {
-      setError(normalizeError(err));
+      setError(handleError(err));
       throw err;
-    } finally {
-      setLoading(false);
     }
-  };
+  }, []);
 
-  const clearError = () => setError(null);
+  const clearError = useCallback(() => setError(null), []);
 
   const value = useMemo(
     () => ({
@@ -114,16 +121,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       resetPassword,
       clearError,
     }),
-    [user, loading, error]
+    [user, loading, error, signIn, signUp, signOut, resetPassword, clearError]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-// Custom Hook to use Auth Context
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

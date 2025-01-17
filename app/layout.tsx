@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   title: {
     default: "Afabric | Sustainable Fashion for Everyone",
     template: "%s | Afabric",
+    
   },
   description: "Discover sustainable, ethically-made fashion that brings your style dreams to life. Shop Afabric for eco-friendly clothing and accessories.",
   keywords: ["sustainable fashion", "ethical clothing", "eco-friendly accessories", "Afabric"],
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.afabric.com",
+    url: "https://afabric-ecommercestore.vercel.app",
     siteName: "Afabric",
     title: "Afabric | Sustainable Fashion for Everyone",
     description: "Discover sustainable, ethically-made fashion that brings your style dreams to life.",
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     creator: "@afabric",
     title: "Afabric | Sustainable Fashion for Everyone",
     description: "Discover sustainable, ethically-made fashion that brings your style dreams to life.",
-    images: ["https://www.afabric.com/twitter-image.jpg"],
+    images: ["https://afabric-ecommercestore.vercel.app/twitter-image.jpg"],
   },
   robots: {
     index: true,
