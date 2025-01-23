@@ -331,7 +331,7 @@ const IconButton = memo(({ icon, label, onClick }: IconButtonProps) => {
         hover:bg-[#8B4513] hover:text-[#F5E6D3]
         active:bg-[#A0522D] active:text-[#F5E6D3]
         focus:outline-none focus:ring-2 focus:ring-[#8B4513] focus:ring-opacity-50
-      `}
+    `}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       aria-label={label}
