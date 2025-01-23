@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://afabric-ecommercestore.vercel.app"),
   title: {
     default: "Afabric | Sustainable Fashion for Everyone",
     template: "%s | Afabric",
@@ -68,17 +69,9 @@ export const metadata: Metadata = {
     apple: "/logo1.jpg",
   },
   manifest: "/site.webmanifest",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
 };
-
+export const viewport = 'width=device-width, initial-scale=1';
+export const themeColor = '#ffffff';
 export default function RootLayout({
   children,
 }: Readonly<{
