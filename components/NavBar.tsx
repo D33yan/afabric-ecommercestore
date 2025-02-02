@@ -367,5 +367,7 @@ const IconButton = memo(({ icon, label, onClick }: IconButtonProps) => {
 })
 
 IconButton.displayName = 'IconButton'
+NavBar.displayName = 'NavBar'
+CheckoutSection.displayName = 'Checkout'
 
 export default NavBar
