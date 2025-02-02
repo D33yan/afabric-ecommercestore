@@ -1,7 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp, FirebaseApp } from "firebase/app";
+import { getAuth, Auth } from "firebase/auth";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getAnalytics, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,17 +13,20 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase only on the client side
-let app;
-let analytics;
-let auth;
-let db;
+// Initialize Firebase only once (to prevent duplicate initialization)
+let app: FirebaseApp;
+let auth: Auth;
+let db: Firestore;
+let analytics: Analytics | null = null; // Analytics might not be available on the server
 
 if (typeof window !== "undefined") {
   app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
-  auth = getAuth(app);
-  db = getFirestore(app);
+} else {
+  app = initializeApp(firebaseConfig);
 }
 
-export { app, analytics, auth, db };
+auth = getAuth(app);
+db = getFirestore(app);
+
+export { app, auth, db, analytics };
