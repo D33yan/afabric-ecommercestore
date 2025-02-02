@@ -32,6 +32,8 @@ const CategoriesSection: React.FC = () => {
                     <Image
                       src={category.image}
                       alt={category.name}
+                      width={100}
+                      height={100}
                       className="w-full h-[400px] object-cover"
                     />
                     <div className="absolute inset-0 bg-peach-900 bg-opacity-40 flex items-center justify-center transition-opacity duration-300 hover:bg-opacity-60">
