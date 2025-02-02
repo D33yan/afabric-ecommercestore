@@ -11,6 +11,8 @@ import { useAuth } from '@/app/contexts/AuthContext'
 import { toast } from 'react-hot-toast'
 import Image from 'next/image'
 
+
+
 type NavItem = {
   href: string;
   label: string;
@@ -22,7 +24,43 @@ const navItems: NavItem[] = [
   { href: '/blogs', label: 'BLOG' },
   { href: '/contact', label: 'CONTACT' },
 ]
+// Add this new component above your NavBar component
 
+const CheckoutSection = memo(({ 
+    totalAmount,
+    user,
+    handleCheckout,
+    clearCart
+  }: {
+    totalAmount: number;
+    user: any;
+    handleCheckout: () => void;
+    clearCart: () => void;
+  }) => (
+    <div className="border-t p-4 space-y-4">
+      <div className="flex justify-between items-center">
+        <span className="font-semibold">Total:</span>
+        <span className="font-bold text-lg">${totalAmount.toFixed(2)}</span>
+      </div>
+      <Button 
+        className="w-full bg-[#8B4513] hover:bg-[#A0522D] text-white"
+        onClick={handleCheckout}
+      >
+        {user ? 'Proceed to Checkout' : 'Sign In to Checkout'}
+      </Button>
+      <Button 
+        variant="outline" 
+        className="w-full text-red-500 hover:text-red-600 hover:bg-red-50 border-red-200"
+        onClick={() => {
+          if (confirm('Are you sure you want to clear your cart?')) {
+            clearCart()
+          }
+        }}
+      >
+        Clear Cart
+      </Button>
+    </div>
+  ));
 const NavBar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -196,91 +234,77 @@ const NavBar: React.FC = () => {
       </AnimatePresence>
 
       {/* Cart Sidebar */}
-      <AnimatePresence>
-        {isCartSidebarOpen && (
-          <motion.div
-            className="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+      {/* Cart Sidebar */}
+<AnimatePresence>
+  {isCartSidebarOpen && (
+    <motion.div
+      className="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50"
+      initial={{ x: '100%' }}
+      animate={{ x: 0 }}
+      exit={{ x: '100%' }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
+      <div className="flex flex-col h-full">
+        <div className="flex justify-between items-center p-4 border-b">
+          <h3 className="text-lg font-semibold">Your Cart ({totalItems})</h3>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Close cart"
+            onClick={toggleCartSidebar}
           >
-            <div className="flex flex-col h-full">
-              <div className="flex justify-between items-center p-4 border-b">
-                <h3 className="text-lg font-semibold">Your Cart ({totalItems})</h3>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="Close cart"
-                  onClick={toggleCartSidebar}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
 
-              <div className="flex-grow overflow-auto p-4">
-                {cartItems.length === 0 ? (
-                  <p className="text-sm text-gray-500">Your cart is empty.</p>
-                ) : (
-                  <ul className="space-y-4">
-                    {cartItems.map((item) => (
-                      <li key={item.id} className="flex items-center gap-3 pb-3 border-b">
-                        <div className="h-16 w-16 bg-gray-100 rounded-md overflow-hidden relative">
-                          <Image
-                            src={item.image || "/placeholder.svg"}
-                            alt={item.name}
-                            className="object-cover w-full h-full"
-                          />
-                        </div>
-                        <div className="flex-grow">
-                          <h4 className="font-medium text-sm">{item.name}</h4>
-                          <p className="text-sm text-gray-500">
-                            ${item.price} x {item.quantity}
-                          </p>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-red-500 hover:text-red-600"
-                          onClick={() => removeItem(item.id)}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              {cartItems.length > 0 && (
-                <div className="border-t p-4 space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="font-semibold">Total:</span>
-                    <span className="font-bold text-lg">${totalAmount.toFixed(2)}</span>
+        <div className="flex-grow overflow-auto p-4">
+          {cartItems.length === 0 ? (
+            <p className="text-sm text-gray-500">Your cart is empty.</p>
+          ) : (
+            <ul className="space-y-4">
+              {cartItems.map((item) => (
+                <li key={item.id} className="flex items-center gap-3 pb-3 border-b">
+                  <div className="h-16 w-16 bg-gray-100 rounded-md overflow-hidden relative">
+                    <Image
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.name}
+                      className="object-cover w-full h-full"
+                      width={64}
+                      height={64}
+                    />
                   </div>
-                  <Button 
-                    className="w-full bg-[#8B4513] hover:bg-[#A0522D] text-white"
-                    onClick={handleCheckout}
+                  <div className="flex-grow">
+                    <h4 className="font-medium text-sm">{item.name}</h4>
+                    <p className="text-sm text-gray-500">
+                      ${item.price} x {item.quantity}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-red-500 hover:text-red-600"
+                    onClick={() => removeItem(item.id)}
                   >
-                    {user ? 'Proceed to Checkout' : 'Sign In to Checkout'}
+                    <X className="h-4 w-4" />
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full text-red-500 hover:text-red-600 hover:bg-red-50 border-red-200"
-                    onClick={() => {
-                      if (confirm('Are you sure you want to clear your cart?')) {
-                        clearCart()
-                      }
-                    }}
-                  >
-                    Clear Cart
-                  </Button>
-                </div>
-              )}
-            </div>
-          </motion.div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {cartItems.length > 0 && (
+          <CheckoutSection 
+            totalAmount={totalAmount}
+            user={user}
+            handleCheckout={handleCheckout}
+            clearCart={clearCart}
+          />
         )}
-      </AnimatePresence>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
     </motion.nav>
   )
 }
