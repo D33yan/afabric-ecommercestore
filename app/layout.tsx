@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar";
 import { CartProvider } from "@/components/layouts/CartContext";
 import Footer from "@/components/layouts/Footer";
 import AuthProvider from "./contexts/AuthContext";
+import GlobalLoaderProvider from "@/components/GlobalLoaderProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,19 +81,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="flex flex-col min-h-screen antialiased">
-        
+        <GlobalLoaderProvider>
           <AuthProvider>
-          <CartProvider>
-            <header>
-              <NavBar />
-            </header>
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </CartProvider>
+            <CartProvider>
+              <header>
+                <NavBar />
+              </header>
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+            </CartProvider>
           </AuthProvider>
-       
+        </GlobalLoaderProvider>
       </body>
     </html>
   );

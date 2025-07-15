@@ -58,39 +58,43 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <Card className="w-full max-w-lg">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-peach-100 to-peach-200">
+      <Card className="w-full max-w-lg shadow-xl border-none rounded-2xl">
         <CardHeader>
-          <CardTitle className='font-extrabold'>Sign Up</CardTitle>
-          <CardDescription className='font-extrabold'>Create a new account to get started.</CardDescription>
+          <CardTitle className='font-extrabold text-3xl text-peach-900'>Sign Up</CardTitle>
+          <CardDescription className='font-extrabold text-peach-700'>Create a new account to get started.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSignUp}>
+          <form onSubmit={handleSignUp} className="space-y-6">
             <div className="grid w-full items-center gap-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="firstName" className='font-extrabold'>First Name</Label>
+                  <Label htmlFor="firstName" className='font-extrabold text-peach-900'>First Name</Label>
                   <Input
                     id="firstName"
                     placeholder="Enter your first name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
+                    autoComplete="given-name"
+                    className="bg-white/80 border-peach-200 focus:border-peach-500"
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="lastName" className='font-extrabold'>Last Name</Label>
+                  <Label htmlFor="lastName" className='font-extrabold text-peach-900'>Last Name</Label>
                   <Input
                     id="lastName"
                     placeholder="Enter your last name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
+                    autoComplete="family-name"
+                    className="bg-white/80 border-peach-200 focus:border-peach-500"
                   />
                 </div>
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email" className='font-extrabold'>Email</Label>
+                <Label htmlFor="email" className='font-extrabold text-peach-900'>Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -98,10 +102,12 @@ export default function SignUp() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  autoComplete="email"
+                  className="bg-white/80 border-peach-200 focus:border-peach-500"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password" className='font-extrabold'>Password</Label>
+                <Label htmlFor="password" className='font-extrabold text-peach-900'>Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -109,10 +115,12 @@ export default function SignUp() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  autoComplete="new-password"
+                  className="bg-white/80 border-peach-200 focus:border-peach-500"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="confirmPassword" className='font-extrabold'>Confirm Password</Label>
+                <Label htmlFor="confirmPassword" className='font-extrabold text-peach-900'>Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -120,29 +128,35 @@ export default function SignUp() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
+                  autoComplete="new-password"
+                  className="bg-white/80 border-peach-200 focus:border-peach-500"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="phoneNumber" className='fontextrabold'>Phone Number</Label>
+                <Label htmlFor="phoneNumber" className='font-extrabold text-peach-900'>Phone Number</Label>
                 <Input
                   id="phoneNumber"
                   type="tel"
                   placeholder="Enter your phone number"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
+                  autoComplete="tel"
+                  className="bg-white/80 border-peach-200 focus:border-peach-500"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="dateOfBirth" className='font-extrabold'>Date of Birth</Label>
+                <Label htmlFor="dateOfBirth" className='font-extrabold text-peach-900'>Date of Birth</Label>
                 <Input
                   id="dateOfBirth"
                   type="date"
                   value={dateOfBirth}
                   onChange={(e) => setDateOfBirth(e.target.value)}
+                  autoComplete="bday"
+                  className="bg-white/80 border-peach-200 focus:border-peach-500"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="gender" className='font-extrabold'>Gender</Label>
+                <Label htmlFor="gender" className='font-extrabold text-peach-900'>Gender</Label>
                 <Select onValueChange={setGender}>
                   <SelectTrigger id="gender">
                     <SelectValue placeholder="Select your gender" />
@@ -156,12 +170,12 @@ export default function SignUp() {
                 </Select>
               </div>
             </div>
-            {error && <p className="text-red-500 mt-4">{error}</p>}
-            <Button type="submit" className="w-full mt-6 font-extrabold bg-peach-900">Sign Up</Button>
+            {error && <p id="signup-error" className="text-red-500 mt-4" role="alert" aria-live="assertive">{error}</p>}
+            <Button type="submit" className="w-full mt-6 font-extrabold bg-peach-900 hover:bg-peach-700 text-white h-12 rounded-lg shadow-lg transition-all duration-300">Sign Up</Button>
           </form>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <p>Already have an account? <Link href="/signin" className="text-blue-500 hover:underline">Sign In</Link></p>
+          <p className="text-peach-700">Already have an account? <Link href="/signin" className="text-blue-500 hover:underline">Sign In</Link></p>
         </CardFooter>
       </Card>
     </div>

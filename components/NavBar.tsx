@@ -61,6 +61,7 @@ const CheckoutSection = memo(({
       </Button>
     </div>
   ));
+// Further improved NavBar for premium, professional look with glassmorphism, shadow, and enhanced effects.
 const NavBar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -109,12 +110,13 @@ const NavBar: React.FC = () => {
   return (
     <motion.nav
       aria-label="Main Navigation"
-      className={`fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#F5E6D3] to-[#F9D5C5] transition-all duration-300 ease-in-out ${
-        isScrolled ? 'shadow-md py-2' : 'py-4'
+      className={`fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-lg border-b border-peach-200 shadow-xl rounded-b-2xl transition-all duration-300 ease-in-out ${
+        isScrolled ? 'shadow-2xl py-2' : 'py-4'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+      style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -124,20 +126,18 @@ const NavBar: React.FC = () => {
               <NavLink key={item.href} href={item.href} label={item.label} />
             ))}
           </div>
-
-          {/* Center logo */}
+          {/* Center logo - visually prominent, no pill/glass background */}
           <div className="flex items-center justify-center flex-grow md:flex-grow-0">
             <Link href="/">
               <motion.span
-                className="text-4xl font-extrabold text-[#8B4513] tracking-wide"
+                className="text-4xl font-extrabold text-peach-900 tracking-wide drop-shadow-lg transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                A Fabric
+                AFabric
               </motion.span>
             </Link>
           </div>
-
           {/* Right links */}
           <div className="hidden md:flex items-center space-x-4">
             {navItems.slice(2).map((item) => (
@@ -170,13 +170,12 @@ const NavBar: React.FC = () => {
                 onClick={toggleCartSidebar}
               />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md border border-white">
                   {totalItems}
                 </span>
               )}
             </div>
           </div>
-
           {/* Mobile menu button */}
           <div className="flex md:hidden">
             <Button
@@ -185,7 +184,7 @@ const NavBar: React.FC = () => {
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMobileMenuOpen}
               onClick={toggleMobileMenu}
-              className="text-[#8B4513] hover:text-[#A0522D]"
+              className="text-peach-900 hover:text-peach-700 bg-white/80 border border-peach-200 shadow-md rounded-full focus:outline-none focus:ring-2 focus:ring-peach-500"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <AlignRight className="h-5 w-5" />}
             </Button>

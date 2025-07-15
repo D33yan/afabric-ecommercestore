@@ -27,7 +27,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       </CardContent>
       <CardFooter className="flex-grow flex flex-col justify-between p-4">
         <div>
-          <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
+          <h3 className="text-xl font-extrabold mb-1">{product.name}</h3>
           <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{product.description}</p>
           <div className="flex items-center mb-2">
             {[...Array(5)].map((_, i) => (
@@ -64,7 +64,7 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Our Collection</h1>
+      <h1 className="text-5xl md:text-7xl font-black text-center mb-8">Our Collection</h1>
       <div className="flex justify-center space-x-4 mb-8">
         {['All', 'Men', 'Women', 'Accessories'].map((category) => (
           <Button

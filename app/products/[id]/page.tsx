@@ -104,7 +104,7 @@ export default function ProductPage() {
             >
               {category}
             </Badge>
-            <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{name}</h1>
+            <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-2">{name}</h1>
             <div className="flex items-center text-sm">
               <div className="flex items-center text-peach-500 mr-2">
                 {Array.from({ length: 5 }).map((_, index) => (
@@ -162,13 +162,13 @@ export default function ProductPage() {
       <div className="grid md:grid-cols-3 gap-8">
         <Card className="bg-gray-50">
           <CardContent className="p-6">
-            <h3 className="text-lg font-extrabold text-gray-900 mb-2">Description</h3>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Description</h2>
             <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
           </CardContent>
         </Card>
         <Card className="bg-gray-50">
           <CardContent className="p-6">
-            <h3 className="text-lg font-extrabold text-gray-900 mb-2">Specifications</h3>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Specifications</h2>
             <ul className="text-sm text-gray-600 space-y-2">
               <li><span className="font-extrabold">Category:</span> {category}</li>
               <li><span className="font-extrabold">Subcategory:</span> {subcategory}</li>
@@ -179,7 +179,7 @@ export default function ProductPage() {
         </Card>
         <Card className="bg-gray-50">
           <CardContent className="p-6">
-            <h3 className="text-lg font-extrabold text-gray-900 mb-2">Reviews</h3>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Reviews</h2>
             <div className="flex items-center mb-4">
               <div className="flex items-center text-peach-500 mr-2">
                 {Array.from({ length: 5 }).map((_, index) => (

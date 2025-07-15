@@ -98,7 +98,7 @@ export default function AboutPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h2 className="text-3xl font-black text-peach-900 mb-4">Our Mission</h2>
+                <h2 className="text-4xl md:text-5xl font-black text-peach-900 mb-4">Our Mission</h2>
                 <p className="text-lg font-extrabold text-peach-700 mb-6">
                   At Afabric, we believe in the power of African fashion to tell stories, preserve culture, and shape the future. Our mission is to showcase the diversity and creativity of African designers, while also educating our audience about the rich history and traditions behind each piece.
                 </p>
@@ -125,7 +125,7 @@ export default function AboutPage() {
             </div>
 
             <div className="mb-20">
-              <h2 className="text-3xl font-black text-peach-900 mb-8 text-center">Meet Our Team</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-peach-900 mb-8 text-center">Meet Our Team</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {teamMembers.map((member, index) => (
                   <TeamMember key={index} {...member} />
@@ -134,12 +134,12 @@ export default function AboutPage() {
             </div>
 
             <div className="mb-20">
-              <h2 className="text-3xl font-black text-peach-900 mb-8 text-center">Our Journey</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-peach-900 mb-8 text-center">Our Journey</h2>
               <Timeline events={timelineEvents} />
             </div>
 
             <div className="mb-20">
-              <h2 className="text-3xl font-black text-peach-900 mb-8 text-center">What We Do</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-peach-900 mb-8 text-center">What We Do</h2>
               <Tabs defaultValue="blog" className="w-full">
                 <TabsList className="grid w-full grid-cols-1 md:grid-cols-4">
                   <TabsTrigger value="blog" className="font-extrabold">Fashion Blog</TabsTrigger>
@@ -150,7 +150,7 @@ export default function AboutPage() {
                 <TabsContent value="blog" className="mt-4">
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="text-xl font-black mb-2">Cutting-Edge Fashion Blog</h3>
+                      <h3 className="text-2xl font-black mb-2">Cutting-Edge Fashion Blog</h3>
                       <p className="font-bold">Our blog showcases the latest trends in African fashion, designer interviews, and style guides. We bring you the best of African creativity, from traditional textiles to modern interpretations.</p>
                     </CardContent>
                   </Card>
@@ -158,7 +158,7 @@ export default function AboutPage() {
                 <TabsContent value="ecommerce" className="mt-4">
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="text-xl font-black mb-2">Curated Online Store</h3>
+                      <h3 className="text-2xl font-black mb-2">Curated Online Store</h3>
                       <p className="font-bold">Shop our carefully curated collection of African-inspired fashion pieces. From statement accessories to ready-to-wear garments, we bring you the best of African design right to your doorstep.</p>
                     </CardContent>
                   </Card>
@@ -166,7 +166,7 @@ export default function AboutPage() {
                 <TabsContent value="events" className="mt-4">
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="text-xl font-black mb-2">Spectacular Fashion Shows</h3>
+                      <h3 className="text-2xl font-black mb-2">Spectacular Fashion Shows</h3>
                       <p className="font-bold">Experience the vibrancy of African fashion at our annual fashion shows. We provide a platform for both established and emerging designers to showcase their collections to a global audience.</p>
                     </CardContent>
                   </Card>
@@ -174,7 +174,7 @@ export default function AboutPage() {
                 <TabsContent value="academy" className="mt-4">
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="text-xl font-black mb-2">Nurturing Talent</h3>
+                      <h3 className="text-2xl font-black mb-2">Nurturing Talent</h3>
                       <p className="font-bold">Afabric Academy offers mentorship programs, workshops, and resources for aspiring African designers. We're committed to fostering the next generation of fashion talent on the continent.</p>
                     </CardContent>
                   </Card>
@@ -183,7 +183,7 @@ export default function AboutPage() {
             </div>
 
             <div className="bg-peach-900 text-white rounded-lg p-12 text-center mb-20">
-              <h2 className="text-3xl font-black mb-4">Join the Afabric Community</h2>
+              <h2 className="text-4xl md:text-5xl font-black mb-4">Join the Afabric Community</h2>
               <p className="text-lg font-extrabold mb-8">Stay updated with the latest trends, designer spotlights, and exclusive content.</p>
               <div className="flex justify-center space-x-4">
                 <motion.a

@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link'
 import { Loader2, ArrowLeft, CheckCircle2 } from 'lucide-react'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 
 export function CheckoutPage (){
   const { cartItems, totalAmount, clearCart } = useCart()
@@ -98,7 +100,7 @@ export function CheckoutPage (){
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-peach-100 to-peach-200 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <Link href="/cart" className="inline-block mb-6">
           <Button variant="ghost" className="text-[#8B4513] hover:text-[#A0522D]">
@@ -106,103 +108,91 @@ export function CheckoutPage (){
             Back to Cart
           </Button>
         </Link>
-
         <motion.div
-          className="bg-white p-6 sm:p-8 rounded-lg shadow-md"
+          className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border-none"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
-          <h1 className="text-2xl font-bold text-[#8B4513] mb-8">Checkout</h1>
-          
-          <div className="space-y-6">
+          <h1 className="text-2xl font-bold text-peach-900 mb-8">Checkout</h1>
+          <form className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input
-                type="email"
+              <Label htmlFor="checkout-email" className="block text-sm font-bold text-peach-900 mb-2">Email</Label>
+              <Input
+                id="checkout-email"
                 name="email"
+                type="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#8B4513] focus:border-[#8B4513]"
                 required
+                autoComplete="email"
+                className="bg-white/80 border-peach-200 focus:border-peach-500"
               />
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Shipping Address</label>
-              <input
-                type="text"
+              <Label htmlFor="checkout-address" className="block text-sm font-bold text-peach-900 mb-2">Shipping Address</Label>
+              <Input
+                id="checkout-address"
                 name="address"
+                type="text"
                 value={formData.address}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#8B4513] focus:border-[#8B4513]"
                 required
+                autoComplete="street-address"
+                className="bg-white/80 border-peach-200 focus:border-peach-500"
               />
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
-                <input
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#8B4513] focus:border-[#8B4513]"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
-                <select
-                  name="state"
-                  value={formData.state}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#8B4513] focus:border-[#8B4513]"
-                  required
-                >
-                  <option value="">Select State</option>
-                  {['Lagos', 'Abuja', 'Rivers', 'Oyo', 'Kano', 'Edo'].map((state) => (
-                    <option key={state} value={state}>{state}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-              <input
-                type="tel"
+              <Label htmlFor="checkout-city" className="block text-sm font-bold text-peach-900 mb-2">City</Label>
+              <Input
+                id="checkout-city"
+                name="city"
+                type="text"
+                value={formData.city}
+                onChange={handleInputChange}
+                required
+                autoComplete="address-level2"
+                className="bg-white/80 border-peach-200 focus:border-peach-500"
+              />
+            </div>
+            <div>
+              <Label htmlFor="checkout-state" className="block text-sm font-bold text-peach-900 mb-2">State</Label>
+              <select
+                id="checkout-state"
+                name="state"
+                value={formData.state}
+                onChange={handleInputChange}
+                required
+                autoComplete="address-level1"
+                className="w-full p-2 border rounded-md bg-white/80 border-peach-200 focus:border-peach-500 focus:ring-2 focus:ring-peach-500"
+              >
+                <option value="">Select State</option>
+                {['Lagos', 'Abuja', 'Rivers', 'Oyo', 'Kano', 'Edo'].map((state) => (
+                  <option key={state} value={state}>{state}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Label htmlFor="checkout-phone" className="block text-sm font-bold text-peach-900 mb-2">Phone Number</Label>
+              <Input
+                id="checkout-phone"
                 name="phone"
+                type="tel"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#8B4513] focus:border-[#8B4513]"
                 required
+                autoComplete="tel"
+                className="bg-white/80 border-peach-200 focus:border-peach-500"
               />
             </div>
-
-            <div className="border-t pt-6">
-              <div className="flex justify-between items-center mb-6">
-                <span className="font-semibold">Total:</span>
-                <span className="text-xl font-bold text-[#8B4513]">₦{totalAmount.toFixed(2)}</span>
-              </div>
-
-              <Button
-                className="w-full bg-[#8B4513] hover:bg-[#A0522D] text-white py-3"
-                onClick={handlePayment}
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Processing Payment...
-                  </>
-                ) : (
-                  'Proceed to Payment'
-                )}
-              </Button>
-            </div>
-          </div>
+          </form>
+          <Button
+            onClick={handlePayment}
+            disabled={loading}
+            className="w-full mt-8 bg-peach-900 hover:bg-peach-700 text-white h-12 rounded-lg shadow-lg font-extrabold text-lg transition-all duration-300"
+          >
+            {loading ? <Loader2 className="h-5 w-5 mr-2 animate-spin" /> : null}
+            {loading ? 'Processing...' : paymentSuccess ? 'Payment Successful!' : 'Pay Now'}
+          </Button>
         </motion.div>
       </div>
     </div>

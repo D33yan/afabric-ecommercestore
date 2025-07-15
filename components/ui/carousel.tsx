@@ -58,6 +58,10 @@ const Carousel = React.forwardRef<
     },
     ref
   ) => {
+    // Add slide indicator state
+    const [selectedIndex, setSelectedIndex] = React.useState(0)
+    const [slideCount, setSlideCount] = React.useState(0)
+
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
@@ -68,13 +72,13 @@ const Carousel = React.forwardRef<
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
     const [canScrollNext, setCanScrollNext] = React.useState(false)
 
+    // Update indicators on select
     const onSelect = React.useCallback((api: CarouselApi) => {
-      if (!api) {
-        return
-      }
-
+      if (!api) return
       setCanScrollPrev(api.canScrollPrev())
       setCanScrollNext(api.canScrollNext())
+      setSelectedIndex(api.selectedScrollSnap())
+      setSlideCount(api.scrollSnapList().length)
     }, [])
 
     const scrollPrev = React.useCallback(() => {
@@ -143,6 +147,26 @@ const Carousel = React.forwardRef<
           {...props}
         >
           {children}
+          {/* Slide indicators for accessibility and navigation */}
+          {slideCount > 1 && (
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+              {Array.from({ length: slideCount }).map((_, idx) => (
+                <button
+                  key={idx}
+                  className={cn(
+                    "w-3 h-3 rounded-full transition-all duration-300",
+                    idx === selectedIndex
+                      ? "bg-peach-700 scale-125 shadow-lg"
+                      : "bg-peach-200 hover:bg-peach-400"
+                  )}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  aria-current={idx === selectedIndex}
+                  tabIndex={0}
+                  onClick={() => api?.scrollTo(idx)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </CarouselContext.Provider>
     )

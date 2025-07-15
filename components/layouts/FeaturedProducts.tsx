@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import ProductCard from './ProductCard'
 import { products } from '@/data/products'
 import useEmblaCarousel from 'embla-carousel-react'
+import Section from "@/components/ui/Section";
 
 export interface Product {
   id: number;
@@ -18,8 +19,14 @@ export interface Product {
   stock: number;
 }
 
+// FeaturedProducts displays a carousel of featured product cards with modern, accessible, and responsive design.
+// Uses embla-carousel for smooth sliding and framer-motion for animation.
+// Section heading and navigation are visually modern and accessible.
+
 const FeaturedProducts: React.FC = () => {
+  // State for favorite products
   const [favorites, setFavorites] = useState<number[]>([])
+  // Embla carousel setup
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: 'start',
@@ -27,69 +34,66 @@ const FeaturedProducts: React.FC = () => {
     dragFree: false
   })
 
+  // Toggle favorite state for a product
   const toggleFavorite = (id: number) => {
     setFavorites(prev => 
       prev.includes(id) ? prev.filter(fav => fav !== id) : [...prev, id]
     )
   }
 
-  // Limit to 6 products
+  // Limit to 6 products for the carousel
   const featuredProducts = products.slice(0, 6);
 
   return (
-    <section className="py-16 bg-gradient-to-b  from-peach-200 via-peach-100 to-peach-400">
-      <div className="container overflow-x-auto mx-auto px-0">
-        <motion.h2 
-          className="text-4xl font-extrabold mb-12 text-center text-peach-900"
-          style={{ textShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)' }}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Featured Products
-        </motion.h2>
-        
-        <div className="relative">
-          <div ref={emblaRef} className="embla">
-            <div className="embla__container flex">
-              {featuredProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  className="embla__slide flex-none w-full sm:w-1/2 lg:w-1/3 px-2"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <ProductCard
-                    product={product}
-                    isFavorite={favorites.includes(product.id)}
-                    onToggleFavorite={toggleFavorite}
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Optional navigation buttons */}
-          <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4">
-            <button
-              onClick={() => emblaApi?.scrollPrev()}
-              className="bg-peach-500 text-white p-2 rounded-full hover:bg-peach-600"
-              aria-label="Previous"
-            >
-              &#10094;
-            </button>
-            <button
-              onClick={() => emblaApi?.scrollNext()}
-              className="bg-peach-500 text-white p-2 rounded-full hover:bg-peach-600"
-              aria-label="Next"
-            >
-              &#10095;
-            </button>
+    <Section
+      heading="Featured Products"
+      id="featured-products-section"
+      ariaLabel="Featured products carousel"
+      backgroundClassName="bg-gradient-to-b from-peach-100 via-peach-50 to-peach-200 relative"
+    >
+      {/* Carousel of product cards */}
+      <div className="relative">
+        <div ref={emblaRef} className="embla">
+          <div className="embla__container flex">
+            {featuredProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                className="embla__slide flex-none w-full sm:w-1/2 lg:w-1/3 px-2"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <ProductCard
+                  product={product}
+                  isFavorite={favorites.includes(product.id)}
+                  onToggleFavorite={toggleFavorite}
+                />
+              </motion.div>
+            ))}
           </div>
         </div>
+        {/* Carousel navigation buttons, visually modern and accessible */}
+        <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 z-10 pointer-events-none">
+          <button
+            onClick={() => emblaApi?.scrollPrev()}
+            className="bg-peach-700 text-white p-3 rounded-full shadow-lg hover:bg-peach-900 focus:bg-peach-900 focus:outline-none focus:ring-2 focus:ring-peach-500 pointer-events-auto transition-all duration-300"
+            aria-label="Previous"
+            tabIndex={0}
+          >
+            &#10094;
+          </button>
+          <button
+            onClick={() => emblaApi?.scrollNext()}
+            className="bg-peach-700 text-white p-3 rounded-full shadow-lg hover:bg-peach-900 focus:bg-peach-900 focus:outline-none focus:ring-2 focus:ring-peach-500 pointer-events-auto transition-all duration-300"
+            aria-label="Next"
+            tabIndex={0}
+          >
+            &#10095;
+          </button>
+        </div>
       </div>
-    </section>
+    </Section>
   )
 }
 
